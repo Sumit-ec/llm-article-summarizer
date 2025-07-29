@@ -21,11 +21,8 @@ const app = express();
 
 // Middleware configuration
 app.use(cors({
-  origin: [
-    'https://llm-article-summarizer.onrender.com', // your frontend domain
-    'http://localhost:3000' // for local development
-  ],
-  credentials: true 
+  origin: '*',
+  credentials: false
 })); // Enable CORS for cross-origin requests
 app.use(express.json()); // Parse JSON request bodies
 
