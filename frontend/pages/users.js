@@ -16,7 +16,7 @@ function Users() {
       const fetchUsers = async () => {
         try {
           const token = localStorage.getItem('token');
-          const res = await axios.get('/api/users', { headers: { Authorization: `Bearer ${token}` } });
+          const res = await axios.get('/users', { headers: { Authorization: `Bearer ${token}` } });
           setUsers(res.data);
         } catch (err) {
           setError('Failed to load users');
