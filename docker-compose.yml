@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  mongo:
+    image: mongo:6
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo_data:/data/db
+  backend:
+    build: ./backend
+    environment:
+      - MONGODB_URI=mongodb://mongo:27017/knowledgehub
+      - JWT_SECRET=your_jwt_secret
+      - OPENAI_API_KEY=your_openai_key
+      - LLM_PROVIDER=openai
+    ports:
+      - 5000:5000
+    depends_on:
+      - mongo
+  frontend:
+    build: ./frontend
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:5000
+    ports:
+      - 3000:3000
+    depends_on:
+      - backend
+volumes:
+  mongo_data: 
