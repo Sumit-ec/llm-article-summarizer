@@ -9,12 +9,13 @@ export default function Register() {
   const [role, setRole] = useState('user');
   const [error, setError] = useState('');
   const router = useRouter();
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     try {
-      await axios.post('/api/auth/register', { username, password, role });
+      await axios.post(`${API_BASE_URL}/auth/register`, { username, password, role });
       notifyAuthStateChanged();
       router.push('/login');
     } catch (err) {

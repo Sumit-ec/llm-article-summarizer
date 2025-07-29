@@ -14,6 +14,7 @@ function EditArticle() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
   useEffect(() => {
     const user = getUserFromToken();
@@ -25,7 +26,7 @@ function EditArticle() {
       const fetchArticle = async () => {
         try {
           const token = localStorage.getItem('token');
-          const res = await axios.get(`/api/articles/${id}`, {
+          const res = await axios.get(`${API_BASE_URL}/articles/${id}`, {
             headers: { Authorization: `Bearer ${token}` }
           });
           
