@@ -20,7 +20,13 @@ dotenv.config();
 const app = express();
 
 // Middleware configuration
-app.use(cors()); // Enable CORS for cross-origin requests
+app.use(cors({
+  origin: [
+    'https://llm-article-summarizer.vercel.app', // your frontend domain
+    'http://localhost:3000' // (optional) for local dev
+  ],
+  credentials: true // if you use cookies or need credentials
+})); // Enable CORS for cross-origin requests
 app.use(express.json()); // Parse JSON request bodies
 
 // MongoDB connection with error handling
