@@ -13,6 +13,9 @@ import ProtectedRoute from '../components/ProtectedRoute';
 import { getUserFromToken } from '../utils/auth';
 import { exportArticleAsPDF } from '../utils/pdfExport';
 
+// Get API base URL from environment variable
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 function Dashboard() {
   // State management for articles and UI
   const [articles, setArticles] = useState([]);
@@ -37,7 +40,7 @@ function Dashboard() {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get(`/api/articles?page=${page}&limit=5`, {
+      const res = await axios.get(`${API_BASE_URL}/articles?page=${page}&limit=5`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       
@@ -77,7 +80,7 @@ function Dashboard() {
     
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`/api/articles/${articleId}`, {
+      await axios.delete(`${API_BASE_URL}/articles/${articleId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       // Refresh current page after deletion

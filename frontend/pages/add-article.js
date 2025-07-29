@@ -3,6 +3,9 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import ProtectedRoute from '../components/ProtectedRoute';
 
+// Get API base URL from environment variable
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 function AddArticle() {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -20,7 +23,7 @@ function AddArticle() {
       const token = localStorage.getItem('token');
       const tagArray = tags.split(',').map(tag => tag.trim()).filter(tag => tag);
       
-      await axios.post('/api/articles', {
+      await axios.post(`${API_BASE_URL}/articles`, {
         title,
         content,
         tags: tagArray

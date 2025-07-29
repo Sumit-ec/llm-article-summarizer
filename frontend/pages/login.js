@@ -3,6 +3,9 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import { notifyAuthStateChanged } from '../utils/auth';
 
+// Get API base URL from environment variable
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -13,7 +16,7 @@ export default function Login() {
     e.preventDefault();
     setError('');
     try {
-      const res = await axios.post('/api/auth/login', { username, password });
+      const res = await axios.post(`${API_BASE_URL}/auth/login`, { username, password });
       localStorage.setItem('token', res.data.token);
       notifyAuthStateChanged();
       router.push('/dashboard');

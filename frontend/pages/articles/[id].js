@@ -6,6 +6,9 @@ import { getUserFromToken } from '../../utils/auth';
 import { exportArticleAsPDF } from '../../utils/pdfExport';
 import Link from 'next/link';
 
+// Get API base URL from environment variable
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 function ArticleView() {
   const router = useRouter();
   const { id } = router.query;
@@ -25,7 +28,7 @@ function ArticleView() {
       const fetchArticle = async () => {
         try {
           const token = localStorage.getItem('token');
-          const res = await axios.get(`/api/articles/${id}`, {
+          const res = await axios.get(`${API_BASE_URL}/articles/${id}`, {
             headers: { Authorization: `Bearer ${token}` },
           });
           setArticle(res.data);
@@ -45,7 +48,7 @@ function ArticleView() {
     setSummarizing(true);
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.post(`/api/articles/${id}/summarize`, {}, {
+      const res = await axios.post(`${API_BASE_URL}/articles/${id}/summarize`, {}, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setArticle({ ...article, summary: res.data.summary });
@@ -63,7 +66,7 @@ function ArticleView() {
     
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`/api/articles/${id}`, {
+      await axios.delete(`${API_BASE_URL}/articles/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       router.push('/dashboard');
