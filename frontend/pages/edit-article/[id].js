@@ -59,7 +59,7 @@ function EditArticle() {
       const token = localStorage.getItem('token');
       const tagArray = tags.split(',').map(tag => tag.trim()).filter(tag => tag);
       
-      await axios.put(`/api/articles/${id}`, {
+      await axios.put(`${API_BASE_URL}/articles/${id}`, {
         title,
         content,
         tags: tagArray

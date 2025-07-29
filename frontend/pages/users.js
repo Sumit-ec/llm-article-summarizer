@@ -3,6 +3,9 @@ import axios from 'axios';
 import ProtectedRoute from '../components/ProtectedRoute';
 import { getUserFromToken } from '../utils/auth';
 
+// Get API base URL from environment variable
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 function Users() {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState('');
@@ -16,9 +19,12 @@ function Users() {
       const fetchUsers = async () => {
         try {
           const token = localStorage.getItem('token');
-          const res = await axios.get(`${API_BASE_URL}/users`, { headers: { Authorization: `Bearer ${token}` } });
+          const res = await axios.get(`${API_BASE_URL}/users`, { 
+            headers: { Authorization: `Bearer ${token}` } 
+          });
           setUsers(res.data);
         } catch (err) {
+          console.error('Error fetching users:', err);
           setError('Failed to load users');
         } finally {
           setLoading(false);
